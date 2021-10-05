@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 function Article(props){
-  console.log('props', props.title, props.body);
   return (
     <article>
       <h2>{props.title}</h2>  
@@ -9,12 +8,20 @@ function Article(props){
     </article> 
   )
 }
-function Nav(){
+function Nav(props){
+  // console.log("🚀 ~ file: App.js ~ line 13 ~ Nav ~ props", props)
+  //   var lis= [        
+  //             <li><a href="1.html">html</a></li>,
+  //             <li><a href="2.html">css</a></li>
+  //           ];
+  var lis = [];
+  for(var i = 0; i < props.src.length; i++){
+      lis.push(<li key={props.src[i].id}>{props.src[i].title}</li>);
+  }
   return (
     <nav>
       <ol>
-        <li><a href="1.html">html</a></li>
-        <li><a href="2.html">css</a></li>
+        {lis}
       </ol>
     </nav>
   );
@@ -25,12 +32,15 @@ function Header(props){
   )
 }
 function App() {
+  var topics = [
+    {id:1, title:'html', body:'html is ..'},
+    {id:2, title:'css', body:'css is ..'}
+  ];
   return (
     <div>
       <Header title="html"></Header>
-      <Nav></Nav>
+      <Nav src={topics}></Nav>
       <Article title="HTML" body="HTML is ..."></Article>  
-      <Article title="CSS" body="CSS is ..."></Article>  
     </div>
   );
 }
