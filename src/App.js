@@ -10,13 +10,21 @@ function Article(props){
 }
 function Nav(props){
   // console.log("🚀 ~ file: App.js ~ line 13 ~ Nav ~ props", props)
+  // ctrl+alt+l
   //   var lis= [        
   //             <li><a href="1.html">html</a></li>,
   //             <li><a href="2.html">css</a></li>
-  //           ];
+  //           ]; 
   var lis = [];
   for(var i = 0; i < props.src.length; i++){
-      lis.push(<li key={props.src[i].id}>{props.src[i].title}</li>);
+      var item = props.src[i];
+      lis.push(
+        <li key={item.id}>          
+            <a href={item.id+".html"}>
+              {item.title}
+            </a>
+        </li>
+      );
   }
   return (
     <nav>
