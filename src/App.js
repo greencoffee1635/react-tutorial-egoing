@@ -9,12 +9,6 @@ function Article(props){
   )
 }
 function Nav(props){
-  // console.log("🚀 ~ file: App.js ~ line 13 ~ Nav ~ props", props)
-  // ctrl+alt+l
-  //   var lis= [        
-  //             <li><a href="1.html">html</a></li>,
-  //             <li><a href="2.html">css</a></li>
-  //           ]; 
   var lis = [];
   for(var i = 0; i < props.src.length; i++){
       var item = props.src[i];
@@ -35,8 +29,12 @@ function Nav(props){
   );
 }
 function Header(props){
+  function aHandler(ev){
+    ev.preventDefault();
+    props.onSelect();
+  }
   return (
-    <header><h1><a href="index.html">{props.title}</a></h1></header>
+    <header><h1><a href="index.html" onClick={aHandler}>{props.title}</a></h1></header>
   )
 }
 function App() {
@@ -44,9 +42,12 @@ function App() {
     {id:1, title:'html', body:'html is ..'},
     {id:2, title:'css', body:'css is ..'}
   ];
+  function selectHandler(){
+    alert('selected!');
+  }
   return (
     <div>
-      <Header title="html"></Header>
+      <Header title="html" onSelect={selectHandler}></Header>
       <Nav src={topics}></Nav>
       <Article title="HTML" body="HTML is ..."></Article>  
     </div>
