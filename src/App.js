@@ -1,20 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
-function Article() {
+function Article(props){
+  console.log('props', props.title, props.body);
   return (
     <article>
-      <h2>안녕</h2>  
-      Hello, WEB
+      <h2>{props.title}</h2>  
+      {props.body}
     </article> 
   )
 }
-function Header() {
+function Nav(){
   return (
-    <header><h1><a href="index.html">WEB</a></h1></header>
-  )
-}
-function Nav() {
-  return(
     <nav>
       <ol>
         <li><a href="1.html">html</a></li>
@@ -23,12 +19,18 @@ function Nav() {
     </nav>
   );
 }
+function Header(){
+  return (
+    <header><h1><a href="index.html">WEB</a></h1></header>
+  )
+}
 function App() {
   return (
     <div>
       <Header></Header>
       <Nav></Nav>
-      <Article></Article>  
+      <Article title="HTML" body="HTML is ..."></Article>  
+      <Article title="CSS" body="CSS is ..."></Article>  
     </div>
   );
 }
