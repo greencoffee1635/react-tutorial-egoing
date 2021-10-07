@@ -13,7 +13,7 @@ function Nav(props){
   var lis = [];
   function aHandler(ev){
     ev.preventDefault();
-    props.onSelect(ev.target.dataset.id);
+    props.onSelect(Number(ev.target.dataset.id));
   }
   for(var i = 0; i < props.src.length; i++){
       var item = props.src[i];
@@ -44,22 +44,31 @@ function Header(props){
 } 
 function App() {
   console.log('run App');
-  // var mode = 'READ';
+  var [id, setId] = useState(2);
   var [mode,setMode] = useState('READ');
   var topics = [
     {id:1, title:'html', body:'html is ..'},
     {id:2, title:'css', body:'css is ..'}
   ];
-  function selectHandler(id){
-    if(id===undefined){
+  function selectHandler(_id){
+    if(_id===undefined){
       mode = setMode('WELCOME');
     } else {
+      id = setId(_id);
       mode = setMode('READ');
     }
   }
   var articleComp = <Article title="Welcome" body="Welcome is ..."></Article>;
   if(mode === 'READ'){
-    articleComp = <Article title="READ" body="Hello, Read"></Article>
+    var title, body;
+    for(var i=0; i<topics.length; i++){
+      var item = topics[i];
+      if(item.id === id){
+        title = item.title;
+        body = item.body;
+      }
+    }
+    articleComp = <Article title={title} body={body}></Article>
   }
   return (
     <div>
