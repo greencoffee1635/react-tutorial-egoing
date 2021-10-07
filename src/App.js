@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react';
 function Article(props){
   return (
     <article>
@@ -42,23 +43,29 @@ function Header(props){
   )
 } 
 function App() {
+  console.log('run App');
+  // var mode = 'READ';
+  var [mode,setMode] = useState('READ');
   var topics = [
     {id:1, title:'html', body:'html is ..'},
     {id:2, title:'css', body:'css is ..'}
   ];
   function selectHandler(id){
     if(id===undefined){
-      // Welcome 나온다.
+      mode = setMode('WELCOME');
     } else {
-      // 선택한 게시글이 출력된다. 
+      mode = setMode('READ');
     }
-    alert('selected!'+id);
+  }
+  var articleComp = <Article title="Welcome" body="Welcome is ..."></Article>;
+  if(mode === 'READ'){
+    articleComp = <Article title="READ" body="Hello, Read"></Article>
   }
   return (
     <div>
       <Header title="html" onSelect={selectHandler}></Header>
       <Nav src={topics} onSelect={selectHandler}></Nav>
-      <Article title="HTML" body="HTML is ..."></Article>  
+      {articleComp}
     </div>
   );
 }
