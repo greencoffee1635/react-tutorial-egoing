@@ -63,20 +63,43 @@ function Create(props){
       </article>
   )
 }
+function Control(props){
+  return (
+    <ul>
+      <li><a href="create.html" onClick={
+        function(ev){
+          ev.preventDefault();
+          props.onChangeMode('CREATE');
+        }
+      }>Create</a></li>
+      <li>
+        <form onSubmit={
+          function(ev){
+            ev.preventDefault();
+            props.onChangeMode('DELETE');
+          }
+        }>
+          <input type="submit" value="delete"></input>
+        </form>
+      </li>
+    </ul>
+  )
+}
 function App() {
   console.log('run App');
   var [id, setId] = useState(2);
-  var [mode,setMode] = useState('CREATE');
-  var topics = [
+  var [mode,setMode] = useState('WELCOME');
+  var [nextId,setNextId] = useState(3);
+  var [topics, setTopics] = useState([
     {id:1, title:'html', body:'html is ..'},
     {id:2, title:'css', body:'css is ..'}
-  ];
+  ]);
   function selectHandler(_id){
     if(_id===undefined){
-      mode = setMode('WELCOME');
+      setMode('WELCOME');
     } else {
       id = setId(_id);
-      mode = setMode('READ');
+      setMode('READ');
     }
   }
   var articleComp = <Article title="Welcome" body="Welcome is ..."></Article>;
@@ -91,16 +114,41 @@ function App() {
     }
     articleComp = <Article title={title} body={body}></Article>
   } else if(mode === 'CREATE') {
-    function createHandler(title,body){
-      alert(title+','+body);
+    function createHandler(_title,_body){
+      // topics.push({title:_title, body:_body});
+      // setTopics(topics);
+      var newTopics = [...topics];
+      newTopics.push({id:nextId, title:_title, body:_body});
+      setTopics(newTopics);
+      setMode('READ');
+      setId(nextId);
+      setNextId(nextId+1);
     }
     articleComp = <Create onCreate={createHandler}></Create>
+  }
+  function changeHandler(_mode){
+    if(_mode === 'DELETE'){
+      // 삭제한다. 
+      var newTopics = [];
+      for(var i=0; i<topics.length; i++){
+        if(topics[i].id === id){
+          
+        } else {
+          newTopics.push(topics[i]);
+        }
+      }
+      setTopics(newTopics);
+      setMode('WELCOME');
+    } else {
+      setMode(_mode);
+    }
   }
   return (
     <div>
       <Header title="html" onSelect={selectHandler}></Header>
       <Nav src={topics} onSelect={selectHandler}></Nav>
       {articleComp}
+      <Control onChangeMode={changeHandler}></Control>
     </div>
   );
 }
