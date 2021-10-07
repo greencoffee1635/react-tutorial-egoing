@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {useState} from 'react';
 function Article(props){
+  console.log('Article');
   return (
     <article>
       <h2>{props.title}</h2>  
@@ -10,6 +11,7 @@ function Article(props){
   )
 }
 function Nav(props){
+  console.log('Nav');
   var lis = [];
   function aHandler(ev){
     ev.preventDefault();
@@ -34,6 +36,7 @@ function Nav(props){
   );
 }
 function Header(props){
+  console.log('Header');
   function aHandler(ev){
     ev.preventDefault();
     props.onSelect();
@@ -42,10 +45,28 @@ function Header(props){
     <header><h1><a href="index.html" onClick={aHandler}>{props.title}</a></h1></header>
   )
 } 
+function Create(props){
+  function submitHandler(ev){
+    ev.preventDefault();
+    var title = ev.target.title.value;
+    var body = ev.target.body.value;
+    props.onCreate(title,body);
+  }
+  return (
+    <article>
+        <h1>Create</h1>
+        <form onSubmit={submitHandler}>
+          <p><input type="text" name="title" /></p>
+          <p><textarea name="body"></textarea></p>
+          <p><input type="submit" /></p>
+        </form>
+      </article>
+  )
+}
 function App() {
   console.log('run App');
   var [id, setId] = useState(2);
-  var [mode,setMode] = useState('READ');
+  var [mode,setMode] = useState('CREATE');
   var topics = [
     {id:1, title:'html', body:'html is ..'},
     {id:2, title:'css', body:'css is ..'}
@@ -69,6 +90,11 @@ function App() {
       }
     }
     articleComp = <Article title={title} body={body}></Article>
+  } else if(mode === 'CREATE') {
+    function createHandler(title,body){
+      alert(title+','+body);
+    }
+    articleComp = <Create onCreate={createHandler}></Create>
   }
   return (
     <div>
