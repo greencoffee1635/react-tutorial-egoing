@@ -91,6 +91,9 @@ function Control(props){
   )
 }
 function Update(props){
+  var [title, setTitle] = useState(props.data.title);
+  var [body, setBody] = useState(props.data.body);
+  console.log('title', title);
   function submitHandler(ev){
     ev.preventDefault();
     var title = ev.target.title.value;
@@ -101,8 +104,16 @@ function Update(props){
     <article>
         <h2>Update</h2>
         <form onSubmit={submitHandler}>
-          <p><input type="text" name="title" value={props.data.title}/></p>
-          <p><textarea name="body"  value={props.data.body}></textarea></p>
+          <p><input type="text" name="title" value={title} onChange={
+            function(ev){
+              setTitle(ev.target.value);
+            }
+          } /></p>
+          <p><textarea name="body"  value={body} onChange={
+            function(ev){
+              setBody(ev.target.value);
+            }
+          }></textarea></p>
           <p><input type="submit" /></p>
         </form>
       </article>
@@ -163,8 +174,6 @@ function App() {
     articleComp = <Update onUpdate={updateHandler} data={data}></Update>
   }
   function changeHandler(_mode){
-    debugger;
-    console.log('id', id);
     if(_mode === 'DELETE'){
       // 삭제한다. 
       var newTopics = [];
