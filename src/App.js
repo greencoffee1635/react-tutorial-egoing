@@ -11,7 +11,6 @@ function Article(props){
   )
 }
 function Nav(props){
-  console.log('Nav');
   var lis = [];
   function aHandler(ev){
     ev.preventDefault();
@@ -56,8 +55,8 @@ function Create(props){
     <article>
         <h1>Create</h1>
         <form onSubmit={submitHandler}>
-          <p><input type="text" name="title" /></p>
-          <p><textarea name="body"></textarea></p>
+          <p><input type="text" name="title" defaultValue="a"/></p>
+          <p><textarea name="body" defaultValue="b"></textarea></p>
           <p><input type="submit" /></p>
         </form>
       </article>
@@ -72,6 +71,12 @@ function Control(props){
           props.onChangeMode('CREATE');
         }
       }>Create</a></li>
+      <li><a href="update.html" onClick={
+        function(ev) {
+          ev.preventDefault();
+          props.onChangeMode('UPDATE');
+        }
+      }>update</a></li>
       <li>
         <form onSubmit={
           function(ev){
@@ -86,7 +91,7 @@ function Control(props){
   )
 }
 function App() {
-  console.log('run App');
+  
   var [id, setId] = useState(2);
   var [mode,setMode] = useState('WELCOME');
   var [nextId,setNextId] = useState(3);
@@ -94,11 +99,12 @@ function App() {
     {id:1, title:'html', body:'html is ..'},
     {id:2, title:'css', body:'css is ..'}
   ]);
+  console.log('run App', id);
   function selectHandler(_id){
     if(_id===undefined){
       setMode('WELCOME');
     } else {
-      id = setId(_id);
+      setId(_id);
       setMode('READ');
     }
   }
@@ -125,8 +131,12 @@ function App() {
       setNextId(nextId+1);
     }
     articleComp = <Create onCreate={createHandler}></Create>
+  } else if(mode === 'UPDATE'){
+    articleComp = <h1>Update</h1>
   }
   function changeHandler(_mode){
+    debugger;
+    console.log('id', id);
     if(_mode === 'DELETE'){
       // 삭제한다. 
       var newTopics = [];
@@ -139,6 +149,8 @@ function App() {
       }
       setTopics(newTopics);
       setMode('WELCOME');
+    } else if(_mode === 'UPDATE'){
+      setMode('UPDATE');
     } else {
       setMode(_mode);
     }
