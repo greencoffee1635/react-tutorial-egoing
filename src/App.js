@@ -1,123 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from 'react';
-function Article(props){
-  console.log('Article');
-  return (
-    <article>
-      <h2>{props.title}</h2>  
-      {props.body}
-    </article> 
-  )
-}
-function Nav(props){
-  var lis = [];
-  function aHandler(ev){
-    ev.preventDefault();
-    props.onSelect(Number(ev.target.dataset.id));
-  }
-  for(var i = 0; i < props.src.length; i++){
-      var item = props.src[i];
-      lis.push(
-        <li key={item.id}>          
-            <a href={item.id+".html"} data-id={item.id} onClick={aHandler}>
-              {item.title}
-            </a>
-        </li>
-      );
-  }
-  return (
-    <nav>
-      <ol>
-        {lis}
-      </ol>
-    </nav>
-  );
-}
-function Header(props){
-  console.log('Header');
-  function aHandler(ev){
-    ev.preventDefault();
-    props.onSelect();
-  }
-  return (
-    <header><h1><a href="index.html" onClick={aHandler}>{props.title}</a></h1></header>
-  )
-} 
-function Create(props){
-  function submitHandler(ev){
-    ev.preventDefault();
-    var title = ev.target.title.value;
-    var body = ev.target.body.value;
-    props.onCreate(title,body);
-  }
-  return (
-    <article>
-        <h2>Create</h2>
-        <form onSubmit={submitHandler}>
-          <p><input type="text" name="title" defaultValue="a"/></p>
-          <p><textarea name="body" defaultValue="b"></textarea></p>
-          <p><input type="submit" /></p>
-        </form>
-      </article>
-  )
-}
-function Control(props){
-  return (
-    <ul>
-      <li><a href="create.html" onClick={
-        function(ev){
-          ev.preventDefault();
-          props.onChangeMode('CREATE');
-        }
-      }>Create</a></li>
-      <li><a href="update.html" onClick={
-        function(ev) {
-          ev.preventDefault();
-          props.onChangeMode('UPDATE');
-        }
-      }>update</a></li>
-      <li>
-        <form onSubmit={
-          function(ev){
-            ev.preventDefault();
-            props.onChangeMode('DELETE');
-          }
-        }>
-          <input type="submit" value="delete"></input>
-        </form>
-      </li>
-    </ul>
-  )
-}
-function Update(props){
-  var [title, setTitle] = useState(props.data.title);
-  var [body, setBody] = useState(props.data.body);
-  function submitHandler(ev){
-    ev.preventDefault();
-    var title = ev.target.title.value;
-    var body = ev.target.body.value;
-    props.onUpdate(title, body);
-  }
-  return (
-    <article>
-        <h2>Update</h2>
-        <form onSubmit={submitHandler}>
-          <p><input type="text" name="title" value={title} onChange={
-            function(ev){
-              setTitle(ev.target.value);
-            }
-          } /></p>
-          <p><textarea name="body"  value={body} onChange={
-            function(ev){
-              setBody(ev.target.value);
-            }
-          }></textarea></p>
-          <p><input type="submit" /></p>
-        </form>
-      </article>
-  )
-}
+import { Article } from './components/Article';
+import { Nav } from './components/Nav';
+import { Header } from './components/Header';
+import { Control } from './components/Control';
+import { Update } from "./components/Update";
+import { Create } from './components/Create';
+
 function App() {
   
   var [id, setId] = useState(2);
