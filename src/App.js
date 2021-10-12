@@ -53,7 +53,7 @@ function Create(props){
   }
   return (
     <article>
-        <h1>Create</h1>
+        <h2>Create</h2>
         <form onSubmit={submitHandler}>
           <p><input type="text" name="title" defaultValue="a"/></p>
           <p><textarea name="body" defaultValue="b"></textarea></p>
@@ -88,6 +88,18 @@ function Control(props){
         </form>
       </li>
     </ul>
+  )
+}
+function Update(){
+  return (
+    <article>
+        <h2>Update</h2>
+        <form>
+          <p><input type="text" name="title" /></p>
+          <p><textarea name="body" ></textarea></p>
+          <p><input type="submit" /></p>
+        </form>
+      </article>
   )
 }
 function App() {
@@ -132,7 +144,7 @@ function App() {
     }
     articleComp = <Create onCreate={createHandler}></Create>
   } else if(mode === 'UPDATE'){
-    articleComp = <h1>Update</h1>
+    articleComp = <Update></Update>
   }
   function changeHandler(_mode){
     debugger;
