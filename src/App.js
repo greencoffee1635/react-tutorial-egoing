@@ -90,13 +90,19 @@ function Control(props){
     </ul>
   )
 }
-function Update(){
+function Update(props){
+  function submitHandler(ev){
+    ev.preventDefault();
+    var title = ev.target.title.value;
+    var body = ev.target.body.value;
+    props.onUpdate(title, body);
+  }
   return (
     <article>
         <h2>Update</h2>
-        <form>
-          <p><input type="text" name="title" /></p>
-          <p><textarea name="body" ></textarea></p>
+        <form onSubmit={submitHandler}>
+          <p><input type="text" name="title" value={props.data.title}/></p>
+          <p><textarea name="body"  value={props.data.body}></textarea></p>
           <p><input type="submit" /></p>
         </form>
       </article>
@@ -144,7 +150,17 @@ function App() {
     }
     articleComp = <Create onCreate={createHandler}></Create>
   } else if(mode === 'UPDATE'){
-    articleComp = <Update></Update>
+    function updateHandler(title,body){
+      alert(title + body);
+    }
+    var data;
+    for(var i=0; i<topics.length; i++){
+      var topic = topics[i];
+      if(topic.id === id){
+        data = topic;
+      }
+    }
+    articleComp = <Update onUpdate={updateHandler} data={data}></Update>
   }
   function changeHandler(_mode){
     debugger;
