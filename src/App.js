@@ -93,7 +93,6 @@ function Control(props){
 function Update(props){
   var [title, setTitle] = useState(props.data.title);
   var [body, setBody] = useState(props.data.body);
-  console.log('title', title);
   function submitHandler(ev){
     ev.preventDefault();
     var title = ev.target.title.value;
@@ -161,8 +160,18 @@ function App() {
     }
     articleComp = <Create onCreate={createHandler}></Create>
   } else if(mode === 'UPDATE'){
-    function updateHandler(title,body){
-      alert(title + body);
+    function updateHandler(_title,_body){
+      var newTopics = [];
+      for(var i=0; i<topics.length; i++){
+        var topic = topics[i];
+        if(topic.id === id){
+          newTopics.push({id:topic.id, title:_title, body:_body});
+        } else {
+          newTopics.push(topic);
+        }
+      }
+      setTopics(newTopics);
+      setMode('READ');
     }
     var data;
     for(var i=0; i<topics.length; i++){
