@@ -1,10 +1,6 @@
+import {Link} from 'react-router-dom';
 export function Header(props) {
-  console.log('Header');
-  function aHandler(ev) {
-    ev.preventDefault();
-    props.onSelect();
-  }
   return (
-    <header><h1><a href="index.html" onClick={aHandler}>{props.title}</a></h1></header>
+    <header><h1><Link to="/">{props.title}</Link></h1></header>
   );
 }

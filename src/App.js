@@ -1,12 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
 import {useState} from 'react';
-import { Article } from './components/Article';
+import Article from './components/Article';
 import { Nav } from './components/Nav';
 import { Header } from './components/Header';
-import { Control } from './components/Control';
-import { Update } from "./components/Update";
 import { Create } from './components/Create';
+import { Control } from './components/Control';
+import { Update } from './components/Update';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
     {id:1, title:'html', body:'html is ..'},
     {id:2, title:'css', body:'css is ..'}
   ]);
-  console.log('run App', id);
   function selectHandler(_id){
     if(_id===undefined){
       setMode('WELCOME');
@@ -93,15 +91,17 @@ function App() {
     }
   }
   return (
-    <Router>
-      <Header title="html" onSelect={selectHandler}></Header>
-      <Nav src={topics} onSelect={selectHandler}></Nav>
-      <Route exact path="/">Welcome</Route>
-      <Route path="/create">Create</Route>
-      <Route path="/read">Read</Route>
-      <Route path="/update">Update</Route>
-      <Control onChangeMode={changeHandler}></Control>
-    </Router>
+    <div>
+      <Router>
+        <Header title="html"></Header>
+        <Nav src={topics} onSelect={selectHandler}></Nav>
+        <Route exact path="/">Welcome</Route>
+        <Route path="/create">Create</Route>
+        <Route path="/read/1">Read</Route>
+        <Route path="/update/1">Update</Route>
+        <Control onChangeMode={changeHandler}></Control>
+      </Router>
+    </div>
   );
 }
 
