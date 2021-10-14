@@ -1,6 +1,6 @@
 import './App.css';
-import {useState} from 'react';
-import Article from './components/Article';
+import { useState } from 'react';
+import { Article } from './components/Article';
 import { Nav } from './components/Nav';
 import { Header } from './components/Header';
 import { Create } from './components/Create';
@@ -97,8 +97,8 @@ function App() {
         <Nav src={topics} onSelect={selectHandler}></Nav>
         <Route exact path="/">Welcome</Route>
         <Route path="/create">Create</Route>
-        <Route path="/read/1">Read</Route>
-        <Route path="/update/1">Update</Route>
+        <Route path="/read/:id">Read</Route>
+        <Route path="/update/:id">Update</Route>
         <Control onChangeMode={changeHandler}></Control>
       </Router>
     </div>
