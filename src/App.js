@@ -95,7 +95,9 @@ function App() {
       <Router>
         <Header title="html"></Header>
         <Nav src={topics} onSelect={selectHandler}></Nav>
-        <Route exact path="/">Welcome</Route>
+        <Route exact path="/">
+          <Article title="Welcome" body="Hello, WEB"></Article>
+        </Route>
         <Route path="/create">Create</Route>
         <Route path="/read/:id">Read</Route>
         <Route path="/update/:id">Update</Route>
