@@ -1,12 +1,12 @@
 import './App.css';
-import {useState} from 'react';
+import { useState } from 'react';
 import { Article } from './components/Article';
 import { Nav } from './components/Nav';
 import { Header } from './components/Header';
 import { Create } from './components/Create';
 import { Control } from './components/Control';
 import { Update } from './components/Update';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, useHistory, useParams } from 'react-router-dom';
 
 function App() {
   var history = useHistory();
@@ -26,19 +26,7 @@ function App() {
     }
   }
   var articleComp = <Article title="Welcome" body="Welcome is ..."></Article>;
-  if(mode === 'READ'){
-    var title, body;
-    for(var i=0; i<topics.length; i++){
-      var item = topics[i];
-      if(item.id === id){
-        title = item.title;
-        body = item.body;
-      }
-    }
-    articleComp = <Article title={title} body={body}></Article>
-  } else if(mode === 'CREATE') {
-
-  } else if(mode === 'UPDATE'){
+  if(mode === 'UPDATE'){
     function updateHandler(_title,_body){
       var newTopics = [];
       for(var i=0; i<topics.length; i++){
@@ -99,11 +87,26 @@ function App() {
       <Route path="/create">
         <Create onCreate={createHandler}></Create>
       </Route>
-      <Route path="/read/:id">Read</Route>
+      <Route path="/read/:id">
+        <Read topics={topics}></Read>
+      </Route>
       <Route path="/update/:id">Update</Route>
       <Control onChangeMode={changeHandler}></Control>
     </div>
   );
+}
+function Read(props){
+  var params = useParams();
+  var id = Number(params.id);
+  var title, body;
+  for(var i=0; i<props.topics.length; i++){
+    var topic = props.topics[i];
+    if(topic.id === id){
+      title = topic.title;
+      body = topic.body;
+    }
+  }
+  return <Article title={title} body={body}></Article>
 }
 
 export default App;
