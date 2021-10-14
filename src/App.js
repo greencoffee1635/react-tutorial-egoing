@@ -7,6 +7,7 @@ import { Header } from './components/Header';
 import { Control } from './components/Control';
 import { Update } from "./components/Update";
 import { Create } from './components/Create';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 function App() {
   
@@ -92,12 +93,15 @@ function App() {
     }
   }
   return (
-    <div>
+    <Router>
       <Header title="html" onSelect={selectHandler}></Header>
       <Nav src={topics} onSelect={selectHandler}></Nav>
-      {articleComp}
+      <Route exact path="/">Welcome</Route>
+      <Route path="/create">Create</Route>
+      <Route path="/read">Read</Route>
+      <Route path="/update">Update</Route>
       <Control onChangeMode={changeHandler}></Control>
-    </div>
+    </Router>
   );
 }
 
