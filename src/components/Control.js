@@ -1,15 +1,9 @@
-
+import {Link} from 'react-router-dom';
 export function Control(props) {
   return (
     <ul>
-      <li><a href="create.html" onClick={function (ev) {
-        ev.preventDefault();
-        props.onChangeMode('CREATE');
-      }}>Create</a></li>
-      <li><a href="update.html" onClick={function (ev) {
-        ev.preventDefault();
-        props.onChangeMode('UPDATE');
-      }}>update</a></li>
+      <li><Link to="/create">Create</Link></li>
+      <li><Link to="/update/1">update</Link></li>
       <li>
         <form onSubmit={function (ev) {
           ev.preventDefault();
@@ -21,4 +15,3 @@ export function Control(props) {
     </ul>
   );
 }
-
