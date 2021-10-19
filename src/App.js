@@ -15,7 +15,7 @@ function Nav(props) {
   var lis = [];
   for (var i = 0; i < props.data.length; i++) {
     lis.push(
-      <li>
+      <li key={props.data[i].id}>
         <Link to={'/read/' + props.data[i].id}>{props.data[i].title}</Link>
       </li>
     );
