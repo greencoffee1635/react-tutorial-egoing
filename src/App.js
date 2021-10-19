@@ -1,27 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Link } from 'react-router-dom';
 
 function Header() {
   return (
     <header>
       <h1>
-        <Link to="/">WEB</Link>
+        <Link to="/">WEB2</Link>
       </h1>
     </header>
   );
 }
 
-function Nav() {
+function Nav(props) {
+  var lis = [];
+  for (var i = 0; i < props.data.length; i++) {
+    lis.push(
+      <li>
+        <Link to={'/read/' + props.data[i].id}>{props.data[i].title}</Link>
+      </li>
+    );
+  }
   return (
     <nav>
-      <ol>
-        <li>
-          <Link to="/read/1">html</Link>
-        </li>
-        <li>
-          <Link to="/read/2">css</Link>
-        </li>
-      </ol>
+      <ol>{lis}</ol>
     </nav>
   );
 }
@@ -36,10 +37,14 @@ function Article() {
 }
 
 function App() {
+  var [topics, setTopics] = useState([
+    { id: 1, title: 'html', body: 'html is ...' },
+    { id: 2, title: 'css', body: 'css is ...' },
+  ]);
   return (
     <div>
       <Header />
-      <Nav />
+      <Nav data={topics} />
       <Route exact path="/">
         Welcome
       </Route>
