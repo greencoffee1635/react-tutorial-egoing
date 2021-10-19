@@ -36,10 +36,18 @@ function Article(props) {
   );
 }
 
-function Read() {
+function Read(props) {
   var params = useParams();
   var id = Number(params.id);
-  return <Article title="Read" body={id} />;
+  var title, body;
+  for (var i = 0; i < props.data.length; i++) {
+    var topic = props.data[i];
+    if (topic.id === id) {
+      title = topic.title;
+      body = topic.body;
+    }
+  }
+  return <Article title={title} body={body} />;
 }
 
 function App() {
@@ -55,7 +63,7 @@ function App() {
         <Article title="Welcome" body="Hello, WEB"></Article>
       </Route>
       <Route path="/read/:id">
-        <Read />
+        <Read data={topics} />
       </Route>
     </div>
   );
