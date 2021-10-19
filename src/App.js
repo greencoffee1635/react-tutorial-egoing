@@ -27,13 +27,17 @@ function Nav(props) {
   );
 }
 
-function Article() {
+function Article(props) {
   return (
     <article>
-      <h2>Welcome</h2>
-      Hello, React
+      <h2>{props.title}</h2>
+      {props.body}
     </article>
   );
+}
+
+function Read() {
+  return <Article title="Read" body="Read!" />;
 }
 
 function App() {
@@ -46,9 +50,11 @@ function App() {
       <Header />
       <Nav data={topics} />
       <Route exact path="/">
-        Welcome
+        <Article title="Welcome" body="Hello, WEB"></Article>
       </Route>
-      <Route path="/read/:id">Read</Route>
+      <Route path="/read/:id">
+        <Read />
+      </Route>
     </div>
   );
 }
