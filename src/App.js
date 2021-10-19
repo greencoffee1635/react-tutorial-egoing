@@ -1,12 +1,17 @@
 import './App.css';
-import { useState } from 'react';
-import { Article } from './components/Article';
+import {useState} from 'react';
+import Article from './components/Article';
 import { Nav } from './components/Nav';
 import { Header } from './components/Header';
 import { Create } from './components/Create';
 import { Control } from './components/Control';
 import { Update } from './components/Update';
-import { Route, useHistory, useParams } from 'react-router-dom';
+import {
+  BrowserRouter as Router, 
+  Route, 
+  useHistory,
+  useParams
+} from 'react-router-dom';
 
 function App() {
   var history = useHistory();
@@ -49,24 +54,17 @@ function App() {
     }
     articleComp = <Update onUpdate={updateHandler} data={data}></Update>
   }
-  function changeHandler(_mode){
-    if(_mode === 'DELETE'){
-      // 삭제한다. 
-      var newTopics = [];
-      for(var i=0; i<topics.length; i++){
-        if(topics[i].id === id){
-          
-        } else {
-          newTopics.push(topics[i]);
-        }
+  function deleteHandler(id){
+    var newTopics = [];
+    for(var i=0; i<topics.length; i++){
+      if(topics[i].id === id){
+        
+      } else {
+        newTopics.push(topics[i]);
       }
-      setTopics(newTopics);
-      setMode('WELCOME');
-    } else if(_mode === 'UPDATE'){
-      setMode('UPDATE');
-    } else {
-      setMode(_mode);
     }
+    setTopics(newTopics);
+    history.push('/');
   }
   function createHandler(_title,_body){
     // topics.push({title:_title, body:_body});
@@ -91,7 +89,7 @@ function App() {
         <Read topics={topics}></Read>
       </Route>
       <Route path="/update/:id">Update</Route>
-      <Control onChangeMode={changeHandler}></Control>
+      <Control onDelete={deleteHandler}></Control>
     </div>
   );
 }
