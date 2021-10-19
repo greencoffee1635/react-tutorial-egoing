@@ -1,6 +1,6 @@
 import './App.css';
-import {useState} from 'react';
-import Article from './components/Article';
+import { useState } from 'react';
+import { Article } from './components/Article';
 import { Nav } from './components/Nav';
 import { Header } from './components/Header';
 import { Create } from './components/Create';
@@ -75,6 +75,19 @@ function App() {
     history.push('/read/'+nextId);
     setNextId(nextId+1);
   }
+  function updateHandler(_id, _title,_body){
+    var newTopics = [];
+    for(var i=0; i<topics.length; i++){
+      var topic = topics[i];
+      if(topic.id === _id){
+        newTopics.push({id:topic.id, title:_title, body:_body});
+      } else {
+        newTopics.push(topic);
+      }
+    }
+    setTopics(newTopics);
+    history.push('/read/'+_id);
+  }
   return (
     <div>
       <Header title="html"></Header>
@@ -88,7 +101,9 @@ function App() {
       <Route path="/read/:id">
         <Read topics={topics}></Read>
       </Route>
-      <Route path="/update/:id">Update</Route>
+      <Route path="/update/:id">
+        <Update onUpdate={updateHandler} topics={topics}></Update>
+      </Route>
       <Control onDelete={deleteHandler}></Control>
     </div>
   );
