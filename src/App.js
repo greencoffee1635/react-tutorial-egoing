@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, useParams } from 'react-router-dom';
 
 function Header() {
   return (
@@ -37,7 +37,9 @@ function Article(props) {
 }
 
 function Read() {
-  return <Article title="Read" body="Read!" />;
+  var params = useParams();
+  var id = Number(params.id);
+  return <Article title="Read" body={id} />;
 }
 
 function App() {
