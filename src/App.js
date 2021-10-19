@@ -1,11 +1,35 @@
 import React from 'react'
 
-function App() {
-  return (
-    <div>
-      Hello React!
-    </div>
-  )
+function Header() {
+  return <header>
+      <h1><a href="/">WEB</a></h1>
+  </header>;
 }
 
-export default App
+function Nav() {
+  return <nav>
+      <ol>
+          <li><a href="/read/1">html</a></li>
+          <li><a href="/read/2">css</a></li>
+      </ol>
+  </nav>;
+}
+
+function Article() {
+  return <article>
+      <h2>Welcome</h2>
+      Hello, React
+  </article>;
+}
+
+function App() {
+return (
+  <div>
+      <Header/>
+      <Nav/>
+      <Article/>
+  </div>
+);
+}
+
+export default App;
