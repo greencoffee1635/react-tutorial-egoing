@@ -1,35 +1,51 @@
-import React from 'react'
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
 
 function Header() {
-  return <header>
-      <h1><a href="/">WEB</a></h1>
-  </header>;
+  return (
+    <header>
+      <h1>
+        <Link to="/">WEB</Link>
+      </h1>
+    </header>
+  );
 }
 
 function Nav() {
-  return <nav>
+  return (
+    <nav>
       <ol>
-          <li><a href="/read/1">html</a></li>
-          <li><a href="/read/2">css</a></li>
+        <li>
+          <Link to="/read/1">html</Link>
+        </li>
+        <li>
+          <Link to="/read/2">css</Link>
+        </li>
       </ol>
-  </nav>;
+    </nav>
+  );
 }
 
 function Article() {
-  return <article>
+  return (
+    <article>
       <h2>Welcome</h2>
       Hello, React
-  </article>;
+    </article>
+  );
 }
 
 function App() {
-return (
-  <div>
-      <Header/>
-      <Nav/>
-      <Article/>
-  </div>
-);
+  return (
+    <div>
+      <Header />
+      <Nav />
+      <Route exact path="/">
+        Welcome
+      </Route>
+      <Route path="/read/:id">Read</Route>
+    </div>
+  );
 }
 
 export default App;
