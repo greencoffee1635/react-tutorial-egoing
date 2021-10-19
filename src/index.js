@@ -11,3 +11,4 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+// Route 컴포넌트는 Router 컴포넌트 안에 있어야한다.
