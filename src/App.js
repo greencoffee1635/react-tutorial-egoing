@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Article } from './components/Article';
 import { Nav } from './components/Nav';
 import { Header } from './components/Header';
@@ -8,48 +8,62 @@ import { Control } from './components/Control';
 import { Update } from './components/Update';
 import { BrowserRouter as Router, Route, useHistory, useParams } from 'react-router-dom';
 
+var URL = '';
 function App() {
   var history = useHistory();
   var [nextId,setNextId] = useState(3);
-  var [topics, setTopics] = useState([
-    {id:1, title:'html', body:'html is ..'},
-    {id:2, title:'css', body:'css is ..'}
-  ]);
-  
+  var [topics, setTopics] = useState([]);
+  function fetchTopics(callback){
+    fetch(URL+'/topics')
+      .then((type)=>type.json())
+      .then((result)=>{
+        setTopics(result);   
+        if(callback){
+          callback();
+        } 
+      })
+  }
+  useEffect(()=>{
+    fetchTopics();
+  }, []);
     
   function deleteHandler(id){
-    var newTopics = [];
-    for(var i=0; i<topics.length; i++){
-      if(topics[i].id === id){
-        
-      } else {
-        newTopics.push(topics[i]);
-      }
-    }
-    setTopics(newTopics);
-    history.push('/');
+    fetch(URL+'/topics/'+id, {
+      method: 'DELETE'
+    })
+      .then(type=>type.json())
+      .then(result=>{
+        fetchTopics(()=>history.push('/'));
+      });
   }
   function createHandler(_title,_body){
-    // topics.push({title:_title, body:_body});
-    // setTopics(topics);
-    var newTopics = [...topics];
-    newTopics.push({id:nextId, title:_title, body:_body});
-    setTopics(newTopics);
-    history.push('/read/'+nextId);
-    setNextId(nextId+1);
+    fetch(URL+'/topics', {
+      method:'POST',
+      body:JSON.stringify({
+        title:_title,body:_body
+      }),
+      headers:{'Content-Type':'application/json'}
+    })
+      .then(type=>type.json())
+      .then(result=>{
+        fetchTopics();
+        history.push('/read/'+result.id);
+      });
   }
   function updateHandler(_id, _title,_body){
-    var newTopics = [];
-    for(var i=0; i<topics.length; i++){
-      var topic = topics[i];
-      if(topic.id === _id){
-        newTopics.push({id:topic.id, title:_title, body:_body});
-      } else {
-        newTopics.push(topic);
-      }
-    }
-    setTopics(newTopics);
-    history.push('/read/'+_id);
+    fetch(URL+'/topics/'+_id, {
+      method:'PUT',
+      body:JSON.stringify({
+        title:_title,body:_body
+      }),
+      headers:{'Content-Type':'application/json'}
+    })
+      .then(type=>type.json())
+      .then(result=>{
+        fetchTopics(()=>{
+          history.push('/read/'+_id)
+        });
+      });
   }
   return (
     <div>
